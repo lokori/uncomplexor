@@ -28,10 +28,11 @@ Well written code in any language does not benefit from analysis of this sort. H
 
 Things are now cast in stone. Should have some parameters for complexity threshold, scanned files, excluded files etc.
 
-
 ## License
 
 Copyright © 2013 Antti Virtanen
+
+(I am fairly certain that I have borrowed a few lines of code from Timo Mihaljov, the part that reads files recursively.)
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
