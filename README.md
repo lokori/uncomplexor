@@ -6,7 +6,15 @@ Experimental Leiningen plugin to measure complexity of Clojure code.
 
 Put `[uncomplexor "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your project.clj.
 
+### example run on the plugin itself
+
 $ lein uncomplexor
+
+lein uncomplexor
+analyzing  uncomplexor
+functions with complexity over threshold 60
+./src/leiningen/uncomplexor.clj: count-branches has complexity 74 (24 nodes/2 branches)
+
 
 ## What does it do?
 
