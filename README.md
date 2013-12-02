@@ -4,19 +4,30 @@ Experimental Leiningen plugin to measure complexity of Clojure code.
 
 ## Usage
 
-FIXME: Use this for user-level plugins:
-
-Put `[uncomplexor "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your
-`:user` profile, or if you are on Leiningen 1.x do `lein plugin install
-uncomplexor 0.1.0-SNAPSHOT`.
-
-FIXME: Use this for project-level plugins:
-
 Put `[uncomplexor "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your project.clj.
 
-FIXME: and add an example usage that actually makes sense:
+$ lein uncomplexor
 
-    $ lein uncomplexor
+## What does it do?
+
+This is an experiment on measuring complexity of Clojure code. Hopefully it is somewhat useful.  It mimics a classic measurement of cyclomatic complexity. Uncomplexor calculates a complexity number based on a simple formula:
+
+complexity = number of nodes + 25 * number of branch-nodes
+
+Thus, a longer function with a lot of nodes (which are called forms in Clojure) gets a bigger number. And having multiple branching forms (such as if or when) means a bigger number too. 
+
+## Is it useful? 
+
+No idea yet. It seems to work, though it is not perfectly accurate. Macros are not counted. 
+Most Clojure code seems to be well written at the moment as I personally see things. 
+
+Well written code in any language does not benefit from analysis of this sort. How it will work out as Clojure becomes more popular remains to be seen. People had been talking about this sort of thing in the internet earlier so I decided to give it a shoot.
+
+
+## TODO
+
+Things are now cast in stone. Should have some parameters for complexity threshold, scanned files, excluded files etc.
+
 
 ## License
 
