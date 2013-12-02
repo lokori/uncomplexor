@@ -3,13 +3,13 @@
   (:require [clojure.java.io :refer [file reader]]
             [clojure.string :refer [trim]]))
 
-(defn tiedostot [hakemisto polku-re ohita]
-  (let [ohita (set (map file ohita))]
-    (for [polku (file-seq (file hakemisto))
-          :when (not (or (.isDirectory polku)
-                         (ohita polku)))
-          :when (re-matches polku-re (str polku))]
-      polku)))
+(defn files [directory path-re skip]
+  (let [skip (set (map file skip))]
+    (for [path (file-seq (file directory))
+          :when (not (or (.isDirectory path)
+                         (skip path)))
+          :when (re-matches path-re (str path))]
+      path)))
 
 (defn count-nodes [data] 
   (if (seq? data) (+ 1 (reduce + 0 (map count-nodes data))) 1))
@@ -22,19 +22,19 @@
     (reduce + 0 (map count-branches data))
   (if (branch-form? data) 1 0)))
 
-(defn pprint-kompleksisuus [kompleksisuus-vec fname]
-  (let [sum (first kompleksisuus-vec)
-        nodes (second kompleksisuus-vec)
-        branches (nth kompleksisuus-vec 2)]
+(defn pprint-complexity [complexity-vec fname]
+  (let [sum (first complexity-vec)
+        nodes (second complexity-vec)
+        branches (nth complexity-vec 2)]
     (str fname " has complexity " sum " (" nodes " nodes/" branches " branches)")))
 
 
-(defn count-complexity [hakemisto & {:keys [ohita]
-                                     :or {ohita #{}}}]
+(defn count-complexity [directory & {:keys [skip]
+                                     :or {skip #{}}}]
   (into {}
   (apply concat
-         (for [polku (tiedostot hakemisto #".*\.clj" ohita)]
-           (with-open [r (PushbackReader. (reader polku))]
+         (for [path (files directory #".*\.clj" skip)]
+           (with-open [r (PushbackReader. (reader path))]
              (doall
                (for [form (repeatedly #(read r false ::eof))
                      :while (not= form ::eof)
@@ -43,7 +43,7 @@
                        branches (count-branches form)
 		       penalty-for-branch 25
                        fname (second form)
-                       id (str  polku ": " fname)]
+                       id (str path ": " fname)]
                    { id [(+ nodes (* penalty-for-branch branches)) nodes  branches] }))))))))
 
 (defn uncomplexor
@@ -55,5 +55,5 @@
         complexity-results (count-complexity  "./src")
 	overly-complex (filter #(< threshold (first (second %))) complexity-results)]
 	(doseq [c overly-complex]
-	  (println (pprint-kompleksisuus (second c) (first c))))))
+	  (println (pprint-complexity (second c) (first c))))))
 
