@@ -10,10 +10,11 @@ Put `[uncomplexor "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your project.
 
 $ lein uncomplexor
 
-lein uncomplexor
+```
 analyzing  uncomplexor
 functions with complexity over threshold 60
 ./src/leiningen/uncomplexor.clj: count-branches has complexity 74 (24 nodes/2 branches)
+```
 
 
 ## What does it do?
