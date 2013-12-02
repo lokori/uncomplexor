@@ -27,10 +27,9 @@ Thus, a longer function with a lot of nodes (which are called forms in Clojure) 
 
 ## Is it useful? 
 
-No idea yet. It seems to work, though it is not perfectly accurate. Macros are not counted. 
-Most Clojure code seems to be well written at the moment as I personally see things. 
+No idea yet. It seems to work, though it is not perfectly accurate. The macros are left out, ad hoc functions with # or fn are not given any consideration etc. so the "real complexity" might be hidden. But measuring complexity can never be accurate anyway.
 
-Well written code in any language does not benefit from analysis of this sort. How it will work out as Clojure becomes more popular remains to be seen. People had been talking about this sort of thing in the internet earlier so I decided to give it a shoot.
+Most Clojure code seems to be well written at the moment as I personally see things.  Well written code in any language does not benefit from analysis of this sort. How it will work out as Clojure becomes more popular remains to be seen. People had been talking about this sort of thing in the internet earlier so I decided to give it a try.
 
 
 ## TODO
