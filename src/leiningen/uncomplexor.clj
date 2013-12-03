@@ -28,9 +28,8 @@
         branches (nth complexity-vec 2)]
     (str fname " has complexity " sum " (" nodes " nodes/" branches " branches)")))
 
-
-(defn count-complexity [directory & {:keys [skip]
-                                     :or {skip #{}}}]
+(defn count-complexity [directory penalty-for-branch macro-penalty & {:keys [skip]
+                                     		      :or {skip #{}}}]
   (into {}
   (apply concat
          (for [path (files directory #".*\.clj" skip)]
@@ -38,22 +37,32 @@
              (doall
                (for [form (repeatedly #(read r false ::eof))
                      :while (not= form ::eof)
-                     :when (and (seq? form) (= 'defn (first form)))]
+                     :when (and (seq? form) (contains? #{'defn 'defmacro} (first form)))]
                  (let [nodes (count-nodes form)
                        branches (count-branches form)
-		       penalty-for-branch 25
                        fname (second form)
+		       multiplier (get {'defn 1 'defmacro macro-penalty} (first form))
                        id (str path ": " fname)]
-                   { id [(+ nodes (* penalty-for-branch branches)) nodes  branches] }))))))))
+                   { id [(+ nodes (* penalty-for-branch branches multiplier)) nodes  branches] }))))))))
+
+(def default-opts {:threshold 60
+     		   :branch-penalty 30
+		   :macro-penalty 2
+		   :source-dir "./src"})
 
 (defn uncomplexor
-  "something happens.."
+  "running complexity analysis.."
   [project & args]
   (println "analyzing " (:name project))
-  (let [threshold 60
-        _ (println (str "functions with complexity over threshold " threshold))
-        complexity-results (count-complexity  "./src")
+  (let [opts (merge default-opts (:uncomplexor project))
+       threshold (:threshold opts)
+       branch-penalty (:branch-penalty opts)
+       macro-penalty (:macro-penalty opts)
+       source-dir (:source-dir opts)
+        _ (println (str "functions or macros with complexity over threshold " threshold))
+        complexity-results (count-complexity source-dir branch-penalty macro-penalty)
 	overly-complex (filter #(< threshold (first (second %))) complexity-results)]
+	
 	(doseq [c overly-complex]
 	  (println (pprint-complexity (second c) (first c))))))
 
