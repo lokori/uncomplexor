@@ -15,7 +15,7 @@
   (if (seq? data) (+ 1 (reduce + 0 (map count-nodes data))) 1))
 
 (defn branch-form? [form]
-  (contains? #{'if 'when 'if-let 'when-not 'when-let} form))
+  (contains? #{'if 'if-not 'if-let 'when 'when-not 'when-let 'when-first 'case 'cond 'condp 'cond->>} form))
 
 (defn count-branches [data] 
   (if (seq? data) 
