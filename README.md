@@ -21,8 +21,10 @@ functions with complexity over threshold 60
 
 This is an experiment on measuring complexity of Clojure code. Hopefully it is somewhat useful.  It mimics a classic measurement of cyclomatic complexity. Uncomplexor calculates a complexity number based on a simple formula:
 
+```
 function declaration complexity = number of nodes + 30 * number of branch-nodes
 macro declaration complexity = 2 * (number of nodes + 30 * number of branch-nodes)
+```
 
 Thus, a longer function with a lot of nodes (which are called forms in Clojure) gets a bigger number. And having multiple branching forms (such as if or when) means a bigger number too. This correlation makes common sense but the number is just a number. 
 
