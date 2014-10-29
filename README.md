@@ -6,6 +6,11 @@ Experimental Leiningen plugin to measure complexity of Clojure code.
 
 Put `[uncomplexor "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your project.clj.
 
+### Available from Clojars.
+
+[![Clojars Project](http://clojars.org/org.clojars.lokori/uncomplexor/latest-version.svg)](http://clojars.org/org.clojars.lokori/uncomplexor)
+
+
 ### example run on the plugin itself
 
 $ lein uncomplexor
