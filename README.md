@@ -46,6 +46,10 @@ No idea yet. It seems to work, though it is not perfectly accurate. Ad hoc funct
 
 Most Clojure code seems to be well written at the moment as I personally see things.  Well written code in any language does not benefit from analysis of this sort. How it will work out as Clojure becomes more popular remains to be seen. People had been talking about this sort of thing in the internet earlier so I decided to give it a try.
 
+## links
+
+[Clojure smells](http://teropa.info/blog/2013/10/14/euroclojure-2013-common-clojure-smells.html) considered in Euroclojure 2013 conference. Some of the smells are easy to detect by static analysis, some are not. 
+
 
 ## License
 
